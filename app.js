@@ -22,7 +22,9 @@ const papers = [...document.querySelectorAll('.publication')];
 function filterPapers(category) {
   let shown = 0;
   papers.forEach(paper => {
-    paper.hidden = category !== 'all' && paper.dataset.category !== category;
+    paper.hidden = category === 'selected'
+      ? paper.dataset.selected !== 'true'
+      : category !== 'all' && paper.dataset.category !== category;
     if (!paper.hidden) shown++;
   });
   filters.forEach(button => {
@@ -34,3 +36,5 @@ function filterPapers(category) {
 }
 filters.forEach(button => button.addEventListener('click', () => filterPapers(button.dataset.filter)));
 document.querySelectorAll('a[href^="#paper-"]').forEach(link => link.addEventListener('click', () => filterPapers('all')));
+
+filterPapers('all');
